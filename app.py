@@ -3,36 +3,31 @@ from core import *
 import requests as r
 import sys
 
-print(sys.setrecursionlimit(2200))
-
 app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-
 @app.route("/", methods = ['POST', 'GET'])
-def aule():
+def index():
 	return render_template('index.html')
 
 @app.route('/results/', methods = ['POST', 'GET'])
 @app.route('/results', methods = ['POST', 'GET'])
 def data():
-	if request.method == 'GET':
-		return redirect("/")
-	if request.method == 'POST':
-		form_data = request.form
-		print(form_data)
-		parola = request.form.get('parola')
-		sinonimo = bool(request.form.get('sinonimo'))
-		livello = int(request.form.get('level'))
-		try:
-			w = getWords([], parola, 0, livello, sinonimo)
-		except Exception as e:
-			return render_template('error.html', e=e)
-		try:
-			return render_template('results.html', hey=print("hey"), words=w)
-		except Exception as e:
-			return render_template('error.html', e=e)
+	form_data = request.form
+	print(form_data)
+	parola = request.form.get('parola')
+	sinonimo = bool(request.form.get('sinonimo'))
+	print(sinonimo)
+	livello = int(request.form.get('level'))
+	try:
+		w = getWords([], parola, 0, livello, sinonimo)
+	except Exception as e:
+		return render_template('error.html', e=e)
+	try:
+		return render_template('results.html', words=w, livello=livello)
+	except Exception as e:
+		return render_template('error.html', e=e)
 
 
 

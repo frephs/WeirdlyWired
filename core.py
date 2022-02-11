@@ -8,6 +8,7 @@ def getUrl(word):
 
 def getSomeSynonymsOf(word, level, sinonimo):
     found = []
+    word = word.capitalize()
     # Let's get scraping
     r = requests.get(getUrl(word))
     content = r.content
@@ -20,15 +21,14 @@ def getSomeSynonymsOf(word, level, sinonimo):
             # print(box.text)
             sinonimi = box.find_all("a" )
             for sin in sinonimi:
-                found.append([sin.text, level, 0])
+                found.append([sin.text.capitalize(), level, 0])
         else:
             try:
                 if soup.findAll('p')[2].text == "Contrari":
-                    print("Hey")
                     box = soup.findAll('p')[3]
                     contrari = box.find_all("a" )
                     for sin in contrari:
-                        found.append([sin.text, level, 0])
+                        found.append([sin.text.capitalize(), level, 0])
             except:
                 pass
     except:
@@ -53,13 +53,13 @@ def _getWords(words, word, level, limit, sinonimo):
 def alreadyPresent(words, word):
     found = False
     for w in words:
-        if w[0]==word[0]:
+        if w[0].capitalize() ==word[0].capitalize() :
             found = True
             w[2] += 1
     return found
 
 def getWords(words, word, level, limit, sinonimo):
-    words = _getWords([], "ingegno", 0,3, True)
+    words = _getWords(words, word, level,3, sinonimo)
     sorter = lambda x: (x[1], -x[2])
     res = sorted(words, key=sorter)
     return res;

@@ -40,13 +40,21 @@ body {
    flex-basis: 0;
    width: 100%;
    flex-grow: 1;
-   height: calc(100% - 2.5rem - 20px);
-   overflow: auto;
+   overflow-y: hidden;
 }
+
 
 #cloud{
      display: flex;
      flex-wrap: wrap;
+     overflow-y: scroll;
+     justify-content: space-around;
+}
+
+@media only screen and (max-width: 768px){
+     #container {
+          overflow-y: hidden;
+     }
 }
 #cloud > div{
      padding: 10px;

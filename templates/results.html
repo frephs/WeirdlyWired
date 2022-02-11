@@ -1,51 +1,241 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <title>GetAulePolimi</title>
-    <link rel="shortcut icon"
-          href="https://seeklogo.com/images/P/Politecnico_di_Milano-logo-CE81376DCF-seeklogo.com.png">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta charset="utf-8">
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <title>GetAulePolimi</title>
 
-    <link rel="stylesheet" href='{{url_for('static', filename='css/style.css')}}'>
-    <title>Weirdly Wired</title>
-</head>
-<body>
-<div class="container pt-3">
-    <h1 id="title"><span id="title-back" class="material-icons">arrow_back</span> Weirdly Wired
+     <link rel="shortcut icon"
+     href="https://seeklogo.com/images/P/Politecnico_di_Milano-logo-CE81376DCF-seeklogo.com.png">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <script src='https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js'></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script src="{{url_for('static', filename='js/cloud1.js')}}" charset="utf-8"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+     crossorigin="anonymous"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+     crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" charset="utf-8"></script>
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+     rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script type="text/javascript">// <![CDATA[
+          function loading() {
+               $("#loading").show();
+               $("#content").hide();
+          }
 
-    <hr>
-</h1>
-    <div id="search-bar">
-        <span class="material-icons">search</span>
-        <span id="search-rect">
-        <input class="form-control" id="search" autocomplete="off" placeholder="Cerca un'aula">
-        </span>
-        <span id="builds" class="btn btn-primary button material-icons toggle-on">business</span>
-        <span id="open" class="btn btn-primary button material-icons">map close</span>
-   </div>
-    <div id="container">
-        <div id="cloud">
-              {% for w in words:%}
-               <div>{{w[0]}}</div>
-              {%endfor%}
-    </div>
+          window.onload = () => {
+               $("#loading").hide();
+               $("#content").show();
+          }
+          // ]]>
+     words_js = [];
+     </script>
+          <link rel="stylesheet" href='{{url_for('static', filename='css/style.css')}}'>
+          <title>Weirdly Wired</title>
+     </head>
+     <body>
+          <div class="container pt-3" id="content">
+               <h1 id="title"><span id="title-back" class="material-icons">arrow_back</span> Weirdly Wired
 
-    </div>
-</div>
-</body>
-</html>
+                    <hr>
+               </h1>
+               <style media="screen">
+               #main, #cloud {
+                    height:460px;
+               }
+
+               @media only screen and (max-width: 768px){
+                    #main {
+                         height:320px;
+                    }
+
+                    #cloud > div{
+                         font-size: 0.8em; padding: 0.6em;
+                    }
+               }
+               </style>
+               <div class="row">
+                    <div id='main'class="col-12 col-md-6 center"></div>
+
+                    {% for w in words:%}
+                    <script type="text/javascript">
+                    console.log((parseInt("{{livello}}")))
+                    w_js = {name: '{{w[0]}}', value: (parseInt("{{livello}}")-parseInt("{{w[1]}}"))*10 + 5*parseInt("{{w[2]}}")}
+                    words_js.push(w_js)
+                    </script>
+
+                    {%endfor%}
+
+
+                    <script src="{{url_for('static', filename='js/cloud.js')}}" charset="utf-8"></script>
+                    <style media="screen">
+                    @media only screen and (max-width: 768px){
+                         #cloud{
+                              height:100px;
+                         }
+                    }
+                    </style>
+                    <div class="col-12 col-md-6 center" >
+                         <div id="container">
+                              <div id="cloud" >
+                                   {% for w in words:%}
+                                   <div style="cursor:pointer" id="{{w[0]}}">
+                                        <form method="POST" action="/results" id="{{w[0]}}-form" onclick="">
+                                             <input type="hidden" name="parola" value="{{w[0]}}" />
+                                             <input type="hidden" name="sinonimo" value="True" />
+                                             <input type="hidden" name="level" value="1" />
+                                             {{w[0]}}
+                                        </form>
+                                   </div>
+                                   <script type="text/javascript">
+
+                                   $("div#{{w[0]}}").click(function(){
+                                        console.log(document.getElementById("{{w[0]}}-form"));
+                                        document.getElementById("{{w[0]}}-form").submit()
+                                   });
+
+                                   </script>
+                                   {%endfor%}
+                              </div>
+
+                         </div>
+
+                    </div>
+
+               </div>
+               <hr>
+               <form action="/results" method="post" class="row">
+
+                    <div class="form-group col-6 col-md-2 center">
+                         <label for="level">Livello</label>
+                         <input type="range" min="1" max="4" name="level" class="form-control" value="2">
+
+                    </div>
+                    <div class="form-group col-6 col-md-2 center">
+                         <label for="sinonimo">Sinonimo o contrario</label> <br>
+                         <input type="radio" name="sinonimo" class="" value="True" checked> Sinonimo<br>
+                         <input type="radio" name="sinonimo" class="" value="False"> Contrario
+                    </div>
+
+                    <div class="form-group col-6 col-md-6 center">
+                         <input required name='parola' class="form-control" value="{{words[0][0]}}">
+                    </div>
+                    <div class="input submit form-group col-6 col-md-2 center">
+                         <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick="loading()">
+                         <!-- <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick=""> -->
+                    </div>
+
+               </form>
+
+               <style media="screen">
+               .loader {
+                    position: absolute;
+                    top: 50%;
+                    left: 40%;
+                    margin-left: 10%;
+                    transform: translate3d(-50%, -50%, 0);
+               }
+
+               .dot {
+                    width: 24px;
+                    height: 24px;
+                    background: #84b3dc;
+                    border-radius: 100%;
+                    display: inline-block;
+                    animation: slide 1s infinite;
+               }
+
+               .dot:nth-child(1) {
+                    animation-delay: 0.1s;
+                    background: #84b3dc;
+               }
+
+               .dot:nth-child(2) {
+                    animation-delay: 0.2s;
+                    background: #f7ba0d;
+               }
+
+               .dot:nth-child(3) {
+                    animation-delay: 0.3s;
+                    background: #e37376;
+               }
+
+               .dot:nth-child(4) {
+                    animation-delay: 0.4s;
+                    background: #5ab15d;
+               }
+
+               .dot:nth-child(5) {
+                    animation-delay: 0.5s;
+                    background: #5bb9d4;
+               }
+
+               @-moz-keyframes slide {
+                    0% {
+                         transform: scale(1);
+                    }
+                    50% {
+                         opacity: 0.3;
+                         transform: scale(2);
+                    }
+                    100% {
+                         transform: scale(1);
+                    }
+               }
+
+               @-webkit-keyframes slide {
+                    0% {
+                         transform: scale(1);
+                    }
+                    50% {
+                         opacity: 0.3;
+                         transform: scale(2);
+                    }
+                    100% {
+                         transform: scale(1);
+                    }
+               }
+
+               @-o-keyframes slide {
+                    0% {
+                         transform: scale(1);
+                    }
+                    50% {
+                         opacity: 0.3;
+                         transform: scale(2);
+                    }
+                    100% {
+                         transform: scale(1);
+                    }
+               }
+
+               @keyframes slide {
+                    0% {
+                         transform: scale(1);
+                    }
+                    50% {
+                         opacity: 0.3;
+                         transform: scale(2);
+                    }
+                    100% {
+                         transform: scale(1);
+                    }
+               }
+
+               </style>
+
+               <div class="loader" id="loading" style="display: none">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+               </div>
+
+          </body>
+          </html>
