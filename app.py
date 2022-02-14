@@ -17,9 +17,11 @@ def data():
 	form_data = request.form
 	print(form_data)
 	parola = request.form.get('parola')
-	sinonimo = bool(request.form.get('sinonimo'))
+	sinonimo = (request.form.get('sinonimo')) == "True"
 	print(sinonimo)
 	livello = int(request.form.get('level'))
+	if parola == '':
+		return render_template('error.html', e="Non hai inserito una parola")
 	try:
 		w = getWords([], parola, 0, livello, sinonimo)
 	except Exception as e:
