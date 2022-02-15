@@ -6,4 +6,4 @@ python -m pip install -r requirements.txt
 python app.py
 ```
 ## Preview
-[Live Preview here](https://sins.frephs.xyz/)
+[Live Preview here](https://parole.frephs.xyz/)
