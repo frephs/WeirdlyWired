@@ -18,7 +18,6 @@ def data():
 	print(form_data)
 	parola = request.form.get('parola')
 	sinonimo = (request.form.get('sinonimo')) == "True"
-	print(sinonimo)
 	livello = int(request.form.get('level'))
 	if parola == '':
 		return render_template('error.html', e="Non hai inserito una parola")

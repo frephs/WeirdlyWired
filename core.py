@@ -15,7 +15,6 @@ def getSomeSynonymsOf(word, level, sinonimo):
     soup = BeautifulSoup(content, 'html.parser')
     box = soup.findAll('div', attrs = {'class':'sct-descr'})
     try:
-        # TODO: divisione sinonimi e contrari dentro e fuori il "p"
         if sinonimo:
             box = soup.findAll('p')[1]
             # print(box.text)
@@ -36,18 +35,17 @@ def getSomeSynonymsOf(word, level, sinonimo):
     return found
 
 
+
 def _getWords(words, word, level, limit, sinonimo):
     words.append([word, level, 1])
     if level < limit:
         syns = getSomeSynonymsOf(word, level+1, sinonimo)
         for s in syns:
-            #print("Checking "+s[0])
             if not alreadyPresent(words, s):
                 if not sinonimo:
                     sinonimo = True
-                _getWords(words, s[0], level+1, limit, sinonimo)
+                _getWords(words, s[0], level+1, limit, sinonimo) 
     return words
-
 
 
 def alreadyPresent(words, word):
@@ -59,7 +57,7 @@ def alreadyPresent(words, word):
     return found
 
 def getWords(words, word, level, limit, sinonimo):
-    words = _getWords(words, word, level,3, sinonimo)
+    words = _getWords(words, word, level, limit, sinonimo)
     sorter = lambda x: (x[1], -x[2])
     res = sorted(words, key=sorter)
     return res;
