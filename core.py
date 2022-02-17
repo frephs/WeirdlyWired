@@ -23,11 +23,10 @@ def getSomeSynonymsOf(word, level, sinonimo):
                 found.append([sin.text.capitalize(), level, 0])
         else:
             try:
-                if soup.findAll('p')[2].text == "Contrari":
-                    box = soup.findAll('p')[3]
-                    contrari = box.find_all("a" )
-                    for sin in contrari:
-                        found.append([sin.text.capitalize(), level, 0])
+                box = soup.findAll('p')[3]
+                contrari = box.find_all("a" )
+                for sin in contrari:
+                    found.append([sin.text.capitalize(), level, 0])
             except:
                 pass
     except:
