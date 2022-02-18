@@ -57,7 +57,11 @@ def intersection():
 	try:
 		return render_template('results.html', words=i, livello=livello)
 	except Exception as e:
-		return render_template('error.html', e=e)
+		print(i)
+		if not len(i):
+			return render_template('warning.html', e=e)
+		else:
+			return render_template('error.html', e=e)
 
 
 

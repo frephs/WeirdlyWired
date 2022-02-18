@@ -92,7 +92,7 @@
                               <div id="cloud" >
                                    {% for w in words:%}
                                    <div style="cursor:pointer" id="{{w[0]}}">
-                                        <form method="POST" action="/results" id="{{w[0]}}-form" onclick="">
+                                        <form method="POST" action="/sinonimiecontrari" id="{{w[0]}}-form" onclick="">
                                              <input type="hidden" name="parola" value="{{w[0]}}" />
                                              <input type="hidden" name="sinonimo" value="True" />
                                              <input type="hidden" name="level" value="1" />

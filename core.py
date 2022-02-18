@@ -52,7 +52,7 @@ def _getWords(words, word, level, maxRecursion, synonym):
     """
     if not alreadyPresent(words, [word, level, 1]):
         words.append([word.capitalize(), level, 1])        
-    if level < maxRecursion:
+    if level < maxRecursion and len(words)<200:
         syns = getSomeSynonymsOf(word, level+1, synonym)
         for s in syns:
             if not alreadyPresent(words, s):
@@ -89,23 +89,27 @@ def findIntersection(str, precision, maxRecursion):
         Intersects the sets and continues until the minimum number of words (precision) is met
         or maxRecursion is reached
     """
-    words = str.split(", "); n_words = len(words);
+    words = str.split(", "); n_words = len(words); iterations = 1;
     words_list = []; intersection = [];
+
+    if n_words == 1:
+        return getWords([], words[0], 0, 2, True)
+
     for w in words:
-        words_list.append([[w, 0, 1]]);
-    iterations = 1
+        words_list.append([[w, 0, 1]])
+        
     while ((not intersection) or ( len(intersection) < precision)) and (iterations<=maxRecursion):
         for i in range(0, n_words):
             for w in words_list[i]:
                 words_list[i] = _getWords(words_list[i], w[0], w[1]+1, iterations, True)
         a = words_list[0]
-        b = [words_list[i] for i in range(0,n_words) if i] # all sets of words except the first one
+        b = [words_list[i] for i in range(0, n_words) if i] # all sets of words except the first one
         intersection = intersect(a,b)
         iterations+=1
     return intersection
 
 def main():
-    print(findIntersection("Metro, quadro", 5, 6))
+    print(findIntersection("Colore, verde", 5, 6))
 
 if __name__ == "__main__":
     main()
