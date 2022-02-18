@@ -4,7 +4,7 @@
      <meta charset="utf-8">
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
      <title>GetAulePolimi</title>
-
+     
      <link rel="shortcut icon"
      href="https://seeklogo.com/images/P/Politecnico_di_Milano-logo-CE81376DCF-seeklogo.com.png">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -27,58 +27,65 @@
                $("#loading").show();
                $("#content").hide();
           }
-
+          
           window.onload = () => {
                $("#loading").hide();
                $("#content").show();
           }
-          // ]]>
-     words_js = [];
-     </script>
-          <link rel="stylesheet" href='{{url_for('static', filename='css/style.css')}}'>
-          <title>Weirdly Wired</title>
-     </head>
-     <body>
-          <div class="container pt-3" id="content">
-               <h1 id="title"><span id="title-back" class="material-icons">arrow_back</span> Weirdly Wired
 
+          
+          // ]]>
+          words_js = [];
+     </script>
+     <link rel="stylesheet" href='{{url_for('static', filename='css/style.css')}}'>
+     <title>Weirdly Wired</title>
+</head>
+<body>
+     <div id="content">
+          
+          <div class="container pt-3">
+               <h1 id="title"><span id="title-back" class="material-icons">arrow_back</span> Weirdly Wired
+                    <script>
+                    $("#title-back").click(() => {
+                         window.location.pathname = "/"
+                    })
+                    </script>
                     <hr>
                </h1>
                <style media="screen">
-               #main, #cloud {
-                    height:460px;
-               }
-
-               @media only screen and (max-width: 768px){
-                    #main {
-                         height:320px;
+                    #main, #cloud {
+                         height:460px;
                     }
-
-                    #cloud > div{
-                         font-size: 0.8em; padding: 0.6em;
+                    
+                    @media only screen and (max-width: 768px){
+                         #main {
+                              height:320px;
+                         }
+                         
+                         #cloud > div{
+                              font-size: 0.8em; padding: 0.6em;
+                         }
                     }
-               }
                </style>
                <div class="row">
                     <div id='main'class="col-12 col-md-6 center"></div>
-
+                    
                     {% for w in words:%}
                     <script type="text/javascript">
-                    console.log((parseInt("{{livello}}")))
-                    w_js = {name: '{{w[0]}}', value: (parseInt("{{livello}}")-parseInt("{{w[1]}}"))*10 + 5*parseInt("{{w[2]}}")}
-                    words_js.push(w_js)
+                         w_js = {name: '{{w[0]}}', value: (parseInt("{{livello}}")-parseInt("{{w[1]}}"))*10 + 5*parseInt("{{w[2]}}")}
+                         words_js.push(w_js)
                     </script>
-
+                    
                     {%endfor%}
-
-
+                    
+                    
                     <script src="{{url_for('static', filename='js/cloud.js')}}" charset="utf-8"></script>
                     <style media="screen">
-                    @media only screen and (max-width: 768px){
-                         #cloud{
-                              height:100px;
+                         @media only screen and (max-width: 768px){
+                              #cloud{
+                                   height:100px;
+                              }
                          }
-                    }
                     </style>
                     <div class="col-12 col-md-6 center" >
                          <div id="container">
@@ -93,35 +100,35 @@
                                         </form>
                                    </div>
                                    <script type="text/javascript">
-
-                                   $("div#{{w[0]}}").click(function(){
-                                        console.log(document.getElementById("{{w[0]}}-form"));
-                                        document.getElementById("{{w[0]}}-form").submit()
-                                   });
-
+                                        
+                                        $("div#{{w[0]}}").click(function(){
+                                             console.log(document.getElementById("{{w[0]}}-form"));
+                                             document.getElementById("{{w[0]}}-form").submit()
+                                        });
+                                        
                                    </script>
                                    {%endfor%}
                               </div>
-
+                              
                          </div>
-
+                         
                     </div>
-
+                    
                </div>
                <hr>
                <form action="/results" method="post" class="row">
-
+                    
                     <div class="form-group col-6 col-md-2 center">
                          <label for="level">Livello</label>
                          <input type="range" min="0" max="5" name="level" class="form-control" value="2">
-
+                         
                     </div>
                     <div class="form-group col-6 col-md-2 center">
                          <label for="sinonimo">Sinonimo o contrario</label> <br>
                          <input type="radio" name="sinonimo" class="" value="True" checked> Sinonimo<br>
                          <input type="radio" name="sinonimo" class="" value="False"> Contrario
                     </div>
-
+                    
                     <div class="form-group col-6 col-md-6 center">
                          <input required name='parola' class="form-control" value="{{words[0][0]}}">
                     </div>
@@ -129,113 +136,115 @@
                          <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick="loading()">
                          <!-- <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick=""> -->
                     </div>
-
+                    
                </form>
-
+               
                <style media="screen">
-               .loader {
-                    position: absolute;
-                    top: 50%;
-                    left: 40%;
-                    margin-left: 10%;
-                    transform: translate3d(-50%, -50%, 0);
-               }
-
-               .dot {
-                    width: 24px;
-                    height: 24px;
-                    background: #84b3dc;
-                    border-radius: 100%;
-                    display: inline-block;
-                    animation: slide 1s infinite;
-               }
-
-               .dot:nth-child(1) {
-                    animation-delay: 0.1s;
-                    background: #84b3dc;
-               }
-
-               .dot:nth-child(2) {
-                    animation-delay: 0.2s;
-                    background: #f7ba0d;
-               }
-
-               .dot:nth-child(3) {
-                    animation-delay: 0.3s;
-                    background: #e37376;
-               }
-
-               .dot:nth-child(4) {
-                    animation-delay: 0.4s;
-                    background: #5ab15d;
-               }
-
-               .dot:nth-child(5) {
-                    animation-delay: 0.5s;
-                    background: #5bb9d4;
-               }
-
-               @-moz-keyframes slide {
-                    0% {
-                         transform: scale(1);
+                    .loader {
+                         position: absolute;
+                         top: 50%;
+                         left: 40%;
+                         margin-left: 10%;
+                         transform: translate3d(-50%, -50%, 0);
                     }
-                    50% {
-                         opacity: 0.3;
-                         transform: scale(2);
+                    
+                    .dot {
+                         width: 24px;
+                         height: 24px;
+                         background: #84b3dc;
+                         border-radius: 100%;
+                         display: inline-block;
+                         animation: slide 1s infinite;
                     }
-                    100% {
-                         transform: scale(1);
+                    
+                    .dot:nth-child(1) {
+                         animation-delay: 0.1s;
+                         background: #84b3dc;
                     }
-               }
-
-               @-webkit-keyframes slide {
-                    0% {
-                         transform: scale(1);
+                    
+                    .dot:nth-child(2) {
+                         animation-delay: 0.2s;
+                         background: #f7ba0d;
                     }
-                    50% {
-                         opacity: 0.3;
-                         transform: scale(2);
+                    
+                    .dot:nth-child(3) {
+                         animation-delay: 0.3s;
+                         background: #e37376;
                     }
-                    100% {
-                         transform: scale(1);
+                    
+                    .dot:nth-child(4) {
+                         animation-delay: 0.4s;
+                         background: #5ab15d;
                     }
-               }
-
-               @-o-keyframes slide {
-                    0% {
-                         transform: scale(1);
+                    
+                    .dot:nth-child(5) {
+                         animation-delay: 0.5s;
+                         background: #5bb9d4;
                     }
-                    50% {
-                         opacity: 0.3;
-                         transform: scale(2);
+                    
+                    @-moz-keyframes slide {
+                         0% {
+                              transform: scale(1);
+                         }
+                         50% {
+                              opacity: 0.3;
+                              transform: scale(2);
+                         }
+                         100% {
+                              transform: scale(1);
+                         }
                     }
-                    100% {
-                         transform: scale(1);
+                    
+                    @-webkit-keyframes slide {
+                         0% {
+                              transform: scale(1);
+                         }
+                         50% {
+                              opacity: 0.3;
+                              transform: scale(2);
+                         }
+                         100% {
+                              transform: scale(1);
+                         }
                     }
-               }
-
-               @keyframes slide {
-                    0% {
-                         transform: scale(1);
+                    
+                    @-o-keyframes slide {
+                         0% {
+                              transform: scale(1);
+                         }
+                         50% {
+                              opacity: 0.3;
+                              transform: scale(2);
+                         }
+                         100% {
+                              transform: scale(1);
+                         }
                     }
-                    50% {
-                         opacity: 0.3;
-                         transform: scale(2);
+                    
+                    @keyframes slide {
+                         0% {
+                              transform: scale(1);
+                         }
+                         50% {
+                              opacity: 0.3;
+                              transform: scale(2);
+                         }
+                         100% {
+                              transform: scale(1);
+                         }
                     }
-                    100% {
-                         transform: scale(1);
-                    }
-               }
-
+                    
                </style>
-
-               <div class="loader" id="loading" style="display: none">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-               </div>
-
-          </body>
-          </html>
+               
+          </div>
+     </div>
+     <div class="loader" id="loading" style="display: none">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+     </div>
+     
+</body>
+</html>

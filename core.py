@@ -80,7 +80,7 @@ def intersect(words_a, words_list):
             if not found:
                 break; # I HATE PYTHON SO MUCH
         if found:
-            intersection.append(a[0].capitalize())
+            intersection.append([a[0].capitalize(), 0, 1+ len(words_list)])
     return intersection
 
 def findIntersection(str, precision, maxRecursion):

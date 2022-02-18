@@ -1,2 +1,0 @@
-- [] Fix height of the children of the flex container
-- [] Implement common synonyms in the webapp (make it coherent)

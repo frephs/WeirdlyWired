@@ -19,81 +19,167 @@
                $("#loading").show();
                $("#content").hide();
           }
-
+          
           window.onload = () => {
                $("#loading").hide();
                $("#content").show();
           }
+
+          function activate(){
+               if($("#rangextend")[0].disabled)
+                    $("#rangextend")[0].disabled = false;
+               else
+                    $("#rangextend")[0].disabled = true;
+          }
           // ]]></script>
      </head>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+     
      <body>
           <title>GetAulePolimi</title>
           <style media="screen">
-          .button {
-               background-color: #5582A8;
-               color: white;
-               transition: background-color 0.5s;
-               cursor: pointer;
-               border-color: #6690b2
-          }
-          .button:hover {
-               background-color: #3c5c77;
-          }
-          .table-condensed{
-               width: 100%;
-               margin: auto;
-               text-align: center;
-          }
+               body{
+                    font-size:1.2em;
+               }
+               .button {
+                    background-color: #5582A8;
+                    color: white;
+                    transition: background-color 0.5s;
+                    cursor: pointer;
+                    border-color: #6690b2
+               }
+               .button:hover {
+                    background-color: #3c5c77;
+               }
+               .table-condensed{
+                    width: 100%;
+                    margin: auto;
+                    text-align: center;
+               }
+               #forms{
+                    flex-direction: column;
+                    display: flex;
+                    gap:20px;
+               }
+               
+               #forms > div {
+                    padding:20px;
+                    border: 1px solid rgba(219, 219, 219, 0.6);
+                    border-radius: 20px;
+                    
+                    
+               }
+               
+               #forms h3 {
+                    margin-top:0.2em;
+                    font-weight: 500;
+               }
+               
+               @media only screen and (min-width: 768px) {
+                    #forms{
+                         flex-direction: row;
+                         margin-bottom: 2em;
+                         justify-content: space-evenly;
+                         align-items: center;
+                    }
+                    #forms > div{
+                         font-size:1.3em;
+                         padding:2em;
+                         
+                         width: 40%;
+                    }
+                    .btn {
+                         font-size:17px;
+                    }
+               }
+               
           </style>
           <div class="container" id="content">
                <h1>Weirdly Wired</h1>
                <hr>
-               <form action="/results" method="post">
-                    <div class="form-group col-12 col-md-8 center">
-                         <label for="parola">Parola</label>
-                         <input name='parola' class="form-control" value="Ingegno">
+               <div id="forms">
+                    <div>
+                         <h3>Sinonimi e contrari</h3>
+                         <form action="/sinonimiecontrari" method="post">
+                              <div class="form-group col-12  center">
+                                   <label for="parola">Parola</label>
+                                   <input name='parola' class="form-control" value="Ingegno">
+                              </div>
+                              
+                              <div class="form-group col-12 center">
+                                   <label for="level">Livello (0-5)</label>
+                                   <input type="range" min="0" max="5" name="level" class="form-control" value="2">
+                                   
+                              </div>
+                              <div class="form-group col-12 center">
+                                   <label for="sinonimo">Sinonimo o contrario</label> <br>
+                                   <input type="radio" name="sinonimo" class="" value="True" checked> Sinonimo<br>
+                                   <input type="radio" name="sinonimo" class="" value="False"> Contrario
+                              </div>
+                              
+                              <div class="input submit">
+                                   <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick="loading()">
+                                   <!-- <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick=""> -->
+                              </div>
+                              
+                         </form>
                     </div>
+                    <div>
+                         <h3>Intersezione parole</h3>
+                         <form action="/intersezione" method="post">
+                              <div class="form-group col-12 center">
+                                   <label for="parole">Parole</label>
+                                   <input name='parole' class="form-control" value="Vedere, sentire, ascoltare">
+                              </div>
+                              
+                              <div class="form-group col-12 center">
+                                   <label for="precisione">Precisione, numero minimo parole <span style="font-size:0.8em; color:rgba(0,0,0,0.5)">(Tenendo conto del limite della ricorsione)</span></label> 
+                                   <input type="number" min="1" max="7" name="precisione" class="form-control" value="4">
+                                   
+                              </div>
+                              <div class="form-group col-12 center">
+                                   <label for="level">Livello (1-7)</label>
+                                   <input type="range" min="1" max="7" name="level" class="form-control" value="4">
+                                   
+                              </div>
+                              <div class="form-group col-12 center">
+                                   <label for="sinonimo">Estendere (0-5)</label> <br>
+                                   <input id="check" type="checkbox" name="estendi" class="" onchange="activate()"> Cercare ricorsivamente sinonimi
+                                   <input id="rangextend" type="range" min="0" max="5" name="estensione" class="form-control" value="2" disabled>
 
-                         <div class="form-group col-12 col-md-2 center">
-                         <label for="level">Livello</label>
-                         <input type="range" min="0" max="5" name="level" class="form-control" value="2">
-
+                              </div>
+                              
+                              <div class="input submit">
+                                   <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick="loading()">
+                                   <!-- <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick=""> -->
+                              </div>
+                              
+                         </form>
                     </div>
-                    <div class="form-group col-12 col-md-2 center">
-                         <label for="sinonimo">Sinonimo o contrario</label> <br>
-                         <input type="radio" name="sinonimo" class="" value="True" checked> Sinonimo<br>
-                         <input type="radio" name="sinonimo" class="" value="False"> Contrario
-                    </div>
-
-                         <div class="input submit">
-                              <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick="loading()">
-                              <!-- <input class="btn btn-primary btn-block button" name="submit" type="submit" value="Submit" onclick=""> -->
-                         </div>
-
-                    </form>
-                    <style media="screen">
+               </div>
+               
+               
+               <style media="screen">
                     a:hover{
                          text-decoration: none;
                     }
-                    </style>
-                    <a href="https://paypal.me/frncscgnvs">
-                         <div class="input btn btn-primary btn-block button" style="background-color:#C68B59; margin-top:10px; border-color: #C68B59; text-decoration:none;">
-                              Offri un caffé! <i class="fa fa-paypal"></i>
-
-                         </div>
-                    </a>
-                    <h3>Credits</h3>
-                    <ul>
-                         <li>
-                              <a href="https://t.me/frephs">Francesco G.</a> (Backend and Frontend)
-                         </li>
-                    </ul>
-
-               </div>
-
-               <style media="screen">
+               </style>
+               <a href="https://paypal.me/frncscgnvs">
+                    <div class="input btn btn-primary btn-block button" style="background-color:#C68B59; margin-top:10px; border-color: #C68B59; text-decoration:none;">
+                         Offri un caffé! <i class="fa fa-paypal"></i>
+                         
+                    </div>
+               </a>
+               <h3>Credits</h3>
+               <ul>
+                    <li>
+                         <a href="https://t.me/frephs">Francesco G.</a> (Backend and Frontend)
+                    </li>
+               </ul>
+               
+          </div>
+          
+          <style media="screen">
                body{
                     font-size: 1.3em;
                }
@@ -104,7 +190,7 @@
                     margin-left: 10%;
                     transform: translate3d(-50%, -50%, 0);
                }
-
+               
                .dot {
                     width: 24px;
                     height: 24px;
@@ -113,32 +199,32 @@
                     display: inline-block;
                     animation: slide 1s infinite;
                }
-
+               
                .dot:nth-child(1) {
                     animation-delay: 0.1s;
                     background: #84b3dc;
                }
-
+               
                .dot:nth-child(2) {
                     animation-delay: 0.2s;
                     background: #f7ba0d;
                }
-
+               
                .dot:nth-child(3) {
                     animation-delay: 0.3s;
                     background: #e37376;
                }
-
+               
                .dot:nth-child(4) {
                     animation-delay: 0.4s;
                     background: #5ab15d;
                }
-
+               
                .dot:nth-child(5) {
                     animation-delay: 0.5s;
                     background: #5bb9d4;
                }
-
+               
                @-moz-keyframes slide {
                     0% {
                          transform: scale(1);
@@ -151,7 +237,7 @@
                          transform: scale(1);
                     }
                }
-
+               
                @-webkit-keyframes slide {
                     0% {
                          transform: scale(1);
@@ -164,7 +250,7 @@
                          transform: scale(1);
                     }
                }
-
+               
                @-o-keyframes slide {
                     0% {
                          transform: scale(1);
@@ -177,7 +263,7 @@
                          transform: scale(1);
                     }
                }
-
+               
                @keyframes slide {
                     0% {
                          transform: scale(1);
@@ -190,16 +276,17 @@
                          transform: scale(1);
                     }
                }
-
-               </style>
-
-               <div class="loader" id="loading" style="display: none">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-               </div>
-
-          </body>
-          </html>
+               
+          </style>
+          
+          <div class="loader" id="loading" style="display: none">
+               <div class="dot"></div>
+               <div class="dot"></div>
+               <div class="dot"></div>
+               <div class="dot"></div>
+               <div class="dot"></div>
+          </div>
+          
+     </body>
+     </html>
+     
